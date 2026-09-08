@@ -1,6 +1,6 @@
 # STKTYASTRA — IHM d’osmose inverse
 
-Première page de supervision locale d’une machine générique fictive. Les données affichées sont **simulées**. Aucun contrôle de machine, backend, appel InfluxDB ou service cloud au fonctionnement.
+Première page de supervision locale d’une machine générique fictive. Les données affichées sont **simulées**. Aucun contrôle de machine ni appel InfluxDB. Une instance Node-RED locale indépendante est fournie pour préparer la collecte OPC UA ; l’IHM reste actuellement alimentée par des mocks.
 
 ## Périmètre V1
 
@@ -9,6 +9,10 @@ Première page de supervision locale d’une machine générique fictive. Les do
 - État machine dans le header : En fonctionnement, À l’arrêt, Attention, Alarme.
 - Cadrages 3D contrôlés `home` / `membranes`, retour via le fond, le bouton ou Échap.
 - Actions accessibles au clavier et boutons de 44 px minimum pour le tactile.
+
+## Collecte OPC UA indépendante
+
+Voir [le guide Node-RED](docs/NODE_RED.md) pour installer l’instance STKTYASTRA sur le port 1881. Aucun changement sur RADAR. Les instructions suivantes concernent le frontend.
 
 ## Installation et lancement
 

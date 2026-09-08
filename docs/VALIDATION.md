@@ -38,3 +38,17 @@ Le navigateur de validation refuse l’adresse interne de l’aperçu (`ERR_BLOC
 - Vite signale le poids du module 3D (>500 kB). La dépendance Three.js est chargée uniquement à l’ouverture de cette vue ; aucun seuil d’avertissement n’a été masqué.
 - Pas de test sur GPU industriel ou tablette physique ; performances réelles à mesurer.
 - Pas de cache PWA : une tablette doit rester connectée à son serveur local.
+
+## Retour utilisateur — 2026-09-08
+
+Installation Windows, lancement de l’IHM et interactions 2.5D/3D validés manuellement par l’utilisateur sur son PC. Les tests sur le matériel cible sont reportés après établissement des flows. L’affichage actuel est conservé. Le test TCP du port OPC UA via eCatcher a réussi ; l’authentification et la lecture de tags restent à vérifier.
+
+## Instance Node-RED indépendante — 2026-09-08
+
+- Dépendances locales verrouillées : Node-RED 5.0.6, node-red-contrib-opcua 0.2.355.
+- Trois tests ciblés : préservation des flows/credentials au redémarrage, isolation des chemins de certificats, diagnostic désactivé sans credentials et sans écriture.
+- Test de démarrage sur un répertoire temporaire : éditeur HTTP, palette OPC UA chargée une seule fois, aucun client Ewon actif par défaut.
+- CI étendue à Linux et Windows avec Node.js 24.11.1, version du PC utilisateur.
+- TypeScript, les 8 tests frontend et le build restent valides ; aucun fichier `src/` modifié.
+- Aucune session Ewon ouverte depuis cet environnement. Login, certificats et première lecture doivent être testés sur le PC utilisateur via son VPN.
+- Dépendance tierce : le crawler OPC UA affiche un avertissement de dépréciation ; le diagnostic reste manuel. La politique d’acceptation des certificats de la palette est documentée dans NODE_RED.md et n’est pas une politique de confiance de production.

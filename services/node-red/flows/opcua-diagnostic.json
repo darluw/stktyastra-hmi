@@ -1,0 +1,194 @@
+[
+  {
+    "id": "opcua-diagnostic",
+    "type": "tab",
+    "label": "Ewon · Diagnostic manuel",
+    "disabled": true,
+    "info": "Onglet désactivé à l’import. Configurer le endpoint et ses credentials localement, puis activer cet onglet. Le client se connecte dès le déploiement ; les requêtes sont manuelles."
+  },
+  {
+    "id": "opcua-howto",
+    "type": "comment",
+    "z": "opcua-diagnostic",
+    "name": "1. Configurer Ewon  2. Activer onglet  3. Déployer  4. Lire / parcourir",
+    "info": "Double-cliquer le client puis éditer son Endpoint. Remplacer 0.0.0.0 par l’adresse Ewon, vérifier le port, sélectionner les politiques réellement proposées par le serveur. Valeurs proposées : Basic256Sha256 / SignAndEncrypt, à confirmer. Saisir le compte User/Password dans les champs credentials. Activer l’onglet depuis ses propriétés puis Déployer. Le client ouvre une session au déploiement. Les boutons ne se déclenchent jamais au démarrage. Le bouton Lire teste la date serveur (NodeId OPC UA standard). Parcourir retourne les objets publiés : relever un vrai NodeId sous EwonTags et le mettre dans un inject READ pour tester un tag. Aucune écriture. Voir docs/NODE_RED.md pour les limites de confiance des certificats de cette palette.",
+    "x": 400,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "opcua-read",
+    "type": "inject",
+    "z": "opcua-diagnostic",
+    "name": "Lire la date du serveur",
+    "props": [
+      {
+        "p": "action",
+        "v": "read",
+        "vt": "str"
+      },
+      {
+        "p": "topic",
+        "v": "ns=0;i=2258",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 220,
+    "y": 180,
+    "wires": [
+      [
+        "opcua-client"
+      ]
+    ]
+  },
+  {
+    "id": "opcua-browse",
+    "type": "inject",
+    "z": "opcua-diagnostic",
+    "name": "Parcourir Objects / EwonTags",
+    "props": [
+      {
+        "p": "action",
+        "v": "browse",
+        "vt": "str"
+      },
+      {
+        "p": "topic",
+        "v": "ns=0;i=85",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 240,
+    "y": 260,
+    "wires": [
+      [
+        "opcua-client"
+      ]
+    ]
+  },
+  {
+    "id": "opcua-disconnect",
+    "type": "inject",
+    "z": "opcua-diagnostic",
+    "name": "Fermer la session",
+    "props": [
+      {
+        "p": "action",
+        "v": "disconnect",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "x": 210,
+    "y": 340,
+    "wires": [
+      [
+        "opcua-client"
+      ]
+    ]
+  },
+  {
+    "id": "opcua-client",
+    "type": "OpcUa-Client",
+    "z": "opcua-diagnostic",
+    "name": "Ewon · Lecture seulement",
+    "endpoint": "opcua-endpoint",
+    "action": "read",
+    "time": 10,
+    "timeUnit": "s",
+    "certificate": "n",
+    "localfile": "",
+    "localkeyfile": "",
+    "securitymode": "SignAndEncrypt",
+    "securitypolicy": "Basic256Sha256",
+    "useTransport": false,
+    "maxChunkCount": 1,
+    "maxMessageSize": 8192,
+    "receiveBufferSize": 8192,
+    "sendBufferSize": 8192,
+    "setstatusandtime": true,
+    "keepsessionalive": false,
+    "x": 540,
+    "y": 220,
+    "wires": [
+      [
+        "opcua-result"
+      ],
+      [
+        "opcua-error"
+      ],
+      [
+        "opcua-status"
+      ]
+    ]
+  },
+  {
+    "id": "opcua-endpoint",
+    "type": "OpcUa-Endpoint",
+    "name": "Ewon · À configurer localement",
+    "endpoint": "opc.tcp://0.0.0.0:4840",
+    "secpol": "Basic256Sha256",
+    "secmode": "SignAndEncrypt",
+    "none": false,
+    "login": true,
+    "usercert": false,
+    "usercertificate": "",
+    "userprivatekey": ""
+  },
+  {
+    "id": "opcua-result",
+    "type": "debug",
+    "z": "opcua-diagnostic",
+    "name": "Résultat OPC UA",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 820,
+    "y": 180,
+    "wires": []
+  },
+  {
+    "id": "opcua-error",
+    "type": "debug",
+    "z": "opcua-diagnostic",
+    "name": "Erreur OPC UA",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 820,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "opcua-status",
+    "type": "debug",
+    "z": "opcua-diagnostic",
+    "name": "État OPC UA",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 820,
+    "y": 340,
+    "wires": []
+  }
+]

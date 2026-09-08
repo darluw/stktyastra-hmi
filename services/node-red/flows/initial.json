@@ -1,0 +1,19 @@
+[
+  {
+    "id": "stktyastra-opcua",
+    "type": "tab",
+    "label": "STKTYASTRA · OPC UA",
+    "disabled": false,
+    "info": "Instance indépendante de RADAR. Importer le flow de diagnostic fourni puis configurer localement le endpoint, les certificats et les identifiants. Aucune écriture vers l'Ewon."
+  },
+  {
+    "id": "stktyastra-instructions",
+    "type": "comment",
+    "z": "stktyastra-opcua",
+    "name": "Prêt pour le diagnostic OPC UA — voir docs/NODE_RED.md",
+    "info": "Les données de l'IHM restent simulées. Le diagnostic n'est jamais exécuté au démarrage. Vos flows modifiés sont conservés dans .runtime/flows.json.",
+    "x": 330,
+    "y": 100,
+    "wires": []
+  }
+]

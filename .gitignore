@@ -8,3 +8,6 @@ dist
 .env.*
 !.env.example
 coverage
+
+# Local Node-RED flows, credentials, certificate stores and runtime metadata
+services/node-red/.runtime/
